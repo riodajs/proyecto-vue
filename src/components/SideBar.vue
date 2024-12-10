@@ -1,6 +1,9 @@
 <template>
   <div class="sidebar">
-    <h2>Barra Lateral</h2>
+    <h2>Bienvenido</h2>
+    <h3>Name: {{ name }}</h3>
+    <h3>Email: {{ email }}</h3>
+
     <ul>
       <li><router-link to="/counter">Contador</router-link></li>
       <li><router-link to="/taskslist">Lista de tareas</router-link></li>
@@ -9,7 +12,19 @@
   </div>
 </template>
 
-<script></script>
+<script setup lang="ts">
+import { useRegisterStore } from '../modules/register/stores/RegisterStore'
+import { ref, watch } from 'vue'
+const registerStore = useRegisterStore()
+
+const name = ref(registerStore.name)
+const email = ref(registerStore.email)
+
+watch(registerStore, (newStore) => {
+  name.value = newStore.name
+  email.value = newStore.email
+})
+</script>
 
 <style scoped>
 .sidebar {
